@@ -42,9 +42,11 @@ model:add(nn.LogSoftMax())   -- f_i(x) = exp(x_i - shift) / sum_j exp(x_j - shif
 
 
 model:cuda() --ship to gpu
-print(tostring(model)) ----------TODO!!!!!!!!!! find out what does it print
+print(tostring(model)) --printing the model
 
 local w, dE_dw = model:getParameters()
+print w
+print dE_dw
 print('Number of parameters:', w:nElement()) --over-specified model
 
 
