@@ -149,8 +149,13 @@ print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
 --- ### Insert a Dropout layer
 model:insert(nn.Dropout(0.9):cuda(), 8) --at each training stage, individual nodes are either dropped out with probablity of 0.1 or kept with propability 0.9
 
-
-
+for e = 1, epochs do
+    trainData, trainLabels = shuffle(trainData, trainLabels) --shuffle training data
+    trainLoss[e], trainError[e] = forwardNet(trainData, trainLabels, true)
+    testLoss[e], testError[e], confusion = forwardNet(testData, testLabels, false)
+end
+print('Training error: ' .. trainError[epochs], 'Training Loss: ' .. trainLoss[epochs])
+print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
 
 -- ********************* Plots *********************
 --[[
