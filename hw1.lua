@@ -134,7 +134,7 @@ end
 model:apply(function(l) l:reset() end)
 optimState = {
     learningRate = 0.1,
-    momentum = 0.9,
+    momentum = 0.7,
     weightDecay = 1e-3
 }
 
