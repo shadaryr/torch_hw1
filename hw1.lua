@@ -26,7 +26,7 @@ require 'cunn'
 
 local inputSize = 28*28
 local outputSize = 10 --number of classes, since there are 10 digits
-local layerSize = {inputSize, 64,128,32}
+local layerSize = {inputSize, 64, 128 , 32}
 
 -- Creating the model; adding a linear transformation and a transfer function between the layers 
 model = nn.Sequential()
@@ -145,6 +145,7 @@ for e = 1, epochs do
 end
 print('Training error: ' .. trainError[epochs], 'Training Loss: ' .. trainLoss[epochs])
 print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
+]]
 
 
 --- ### Insert a Dropout layer
@@ -158,7 +159,7 @@ end
 print('Training error: ' .. trainError[epochs], 'Training Loss: ' .. trainLoss[epochs])
 print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
 
-]]
+
 -- ********************* Plots *********************
 --[[
 require 'gnuplot'
