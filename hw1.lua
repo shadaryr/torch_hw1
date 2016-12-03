@@ -45,9 +45,7 @@ model:cuda() --ship to gpu
 print(tostring(model)) --printing the model
 
 local w, dE_dw = model:getParameters()
-if (w == dE_dw) then
-	print ('w==dE_dw')
-end
+print (dE_dw)
 print('Number of parameters:', w:nElement()) --over-specified model
 
 
