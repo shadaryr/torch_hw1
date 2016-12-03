@@ -44,28 +44,23 @@ model:add(nn.LogSoftMax())   -- f_i(x) = exp(x_i - shift) / sum_j exp(x_j - shif
 model:cuda() --ship to gpu
 print(tostring(model)) --printing the model
 
-local w, dE_dw = model:getParameters()
-print (dE_dw)
+local w, dE_dw = model:getParameters() --w will hold all model parameters and dE_dw will hold the gradient of the loss w.r.t. the same parameters
 print('Number of parameters:', w:nElement()) --over-specified model
 
 
 ---- ### Classification criterion
-
 criterion = nn.ClassNLLCriterion():cuda()
 
 ---	 ### predefined constants
-
 require 'optim'
 batchSize = 128
 
 optimState = {
     learningRate = 0.1
-    
 }
 
---- ### Main evaluation + training function
 
---[[
+--- ### Main evaluation + training function
 function forwardNet(data, labels, train)
 	timer = torch.Timer()
 
@@ -75,43 +70,40 @@ function forwardNet(data, labels, train)
     local numBatches = 0
     if train then
         --set network into training mode
-        model:training()
+        model:training() --This sets the mode of the Module (or sub-modules) to train=true
     end
-    for i = 1, data:size(1) - batchSize, batchSize do
+    for i = 1, data:size(1) - batchSize, batchSize do --from i=1, while i<=number of rows in data - batchSize, every iteration i increments in batchSize
         numBatches = numBatches + 1
-        local x = data:narrow(1, i, batchSize):cuda()
-        local yt = labels:narrow(1, i, batchSize):cuda()
-        local y = model:forward(x)
-        local err = criterion:forward(y, yt)
-        lossAcc = lossAcc + err
-        confusion:batchAdd(y,yt)
+        local x = data:narrow(1, i, batchSize):cuda() --the 1st dimention is narrowed from (i) to (i+batchSize-1) -> creating a tensor for current batch
+        local yt = labels:narrow(1, i, batchSize):cuda() -- same just for lables
+        local y = model:forward(x) --computes the corresponding output of the batch ("y hat")
+        local err = criterion:forward(y, yt) --Given y as an in put and yt as a target, computes the loss function assiciated to the criterions and return the result.
+        lossAcc = lossAcc + err -- accumulates the losses
+        confusion:batchAdd(y,yt) --updates confusion matrix
         
         if train then
             function feval()
                 model:zeroGradParameters() --zero grads
                 local dE_dy = criterion:backward(y,yt)
                 model:backward(x, dE_dy) -- backpropagation
-            
                 return err, dE_dw
             end
         
-            optim.sgd(feval, w, optimState)
+            optim.sgd(feval, w, optimState) --preforms stochastic gradient descent
         end
     end
     
     confusion:updateValids()
-    local avgLoss = lossAcc / numBatches
+    local avgLoss = lossAcc / numBatches --Calculating avrage loss
     local avgError = 1 - confusion.totalValid
 	print(timer:time().real .. ' seconds')
 
     return avgLoss, avgError, tostring(confusion)
 end
-]]
+
 
 
 --- ### Train the network on training set, evaluate on separate set
-
---[[
 epochs = 20
 
 trainLoss = torch.Tensor(epochs)
@@ -134,7 +126,6 @@ for e = 1, epochs do
         print(confusion)
     end
 end
-]]
 
 
 ---		### Introduce momentum, L2 regularization
@@ -181,17 +172,3 @@ gnuplot.xlabel('epochs')
 gnuplot.ylabel('Loss')
 gnuplot.plotflush()
 ]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
