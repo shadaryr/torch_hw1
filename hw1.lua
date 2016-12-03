@@ -128,7 +128,7 @@ for e = 1, epochs do
 end
 
 
---[[
+
 ---		### Introduce momentum, L2 regularization
 --reset net weights
 model:apply(function(l) l:reset() end)
@@ -145,12 +145,12 @@ for e = 1, epochs do
 end
 print('Training error: ' .. trainError[epochs], 'Training Loss: ' .. trainLoss[epochs])
 print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
-]]
 
 
+--[[
 --- ### Insert a Dropout layer
 model:insert(nn.Dropout(0.9):cuda(), 8) --at each training stage, individual nodes are either dropped out with probablity of 0.1 or kept with propability 0.9
-
+]]
 
 -- ********************* Plots *********************
 --[[
