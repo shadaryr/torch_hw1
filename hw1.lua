@@ -53,7 +53,7 @@ criterion = nn.ClassNLLCriterion():cuda()
 
 ---	 ### predefined constants
 require 'optim'
-batchSize = 256
+batchSize = 64
 
 optimState = {
     learningRate = 0.1
