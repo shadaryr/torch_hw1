@@ -128,6 +128,7 @@ for e = 1, epochs do
 end
 
 
+--[[
 ---		### Introduce momentum, L2 regularization
 --reset net weights
 model:apply(function(l) l:reset() end)
@@ -157,6 +158,7 @@ end
 print('Training error: ' .. trainError[epochs], 'Training Loss: ' .. trainLoss[epochs])
 print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
 
+]]
 -- ********************* Plots *********************
 --[[
 require 'gnuplot'
