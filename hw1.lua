@@ -56,7 +56,7 @@ require 'optim'
 batchSize = 128
 
 optimState = {
-    learningRate = 0.2
+    learningRate = 0.1
 }
 
 
@@ -104,7 +104,7 @@ end
 
 
 --- ### Train the network on training set, evaluate on separate set
-epochs = 20
+epochs = 40
 
 trainLoss = torch.Tensor(epochs)
 testLoss = torch.Tensor(epochs)
