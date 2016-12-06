@@ -39,9 +39,9 @@ end ]]--
 model:add(nn.Linear(inputSize, 64))
 model:add(nn.ReLU())
 model:add(nn.Linear(64, 128))
-model:add(nn.ReLU())
-model:add(nn.Linear(128, 32))
 model:add(nn.Tanh())
+model:add(nn.Linear(128, 32))
+model:add(nn.ReLU())
 
 -- Adding the final layer to the model
 model:add(nn.Linear(layerSize[#layerSize], outputSize))
@@ -57,7 +57,7 @@ print('Number of parameters:', w:nElement()) --over-specified model
 
 ---- ### Classification criterion
 --criterion = nn.ClassNLLCriterion():cuda()
-criterion = nn.ClassNLLCriterion():cuda()
+criterion = nn.CrossEntropyCriterion():cuda()
 
 ---	 ### predefined constants
 require 'optim'
