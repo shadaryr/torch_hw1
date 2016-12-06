@@ -31,10 +31,17 @@ local layerSize = {inputSize, 64, 128, 32}
 model = nn.Sequential()
 model:add(nn.View(28 * 28)) --reshapes the image into a vector without copy
 
-for i=1, #layerSize-1 do
+--[[for i=1, #layerSize-1 do
     model:add(nn.Linear(layerSize[i], layerSize[i+1]))
 	model:add(nn.ReLU())
-end
+end ]]--
+
+model:add(nn.Linear(inputSize, 64)
+model:add(nn.ReLU())
+model:add(nn.Linear(64, 128)
+model:add(nn.Tanh())
+model:add(nn.Linear(128, 32)
+model:add(nn.ReLU())
 
 
 -- Adding the final layer to the model
