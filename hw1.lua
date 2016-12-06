@@ -151,7 +151,7 @@ print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
 
 
 --- ### Insert a Dropout layer
-model:insert(nn.Dropout(0.9):cuda(), 8) --at each training stage, individual nodes are either dropped out with probablity of 0.1 or kept with propability 0.9
+model:insert(nn.Dropout(0.5):cuda(), 8) --at each training stage, individual nodes are either dropped out with probablity of 0.1 or kept with propability 0.9
 
 -- ********************* Plots *********************
 
