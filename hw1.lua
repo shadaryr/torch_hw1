@@ -25,7 +25,7 @@ require 'cunn'
 
 local inputSize = 28*28
 local outputSize = 10 --number of classes, since there are 10 digits
-local layerSize = {inputSize, 16, 16, 16, 16, 32}
+local layerSize = {inputSize, 16, 16, 16, 16, 64, 32}
 
 -- Creating the model; adding a linear transformation and a transfer function between the layers 
 model = nn.Sequential()
