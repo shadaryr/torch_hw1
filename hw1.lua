@@ -64,7 +64,7 @@ require 'optim'
 batchSize = 128
 
 optimState = {
-    learningRate = 0.07
+    learningRate = 0.1
 }
 
 
