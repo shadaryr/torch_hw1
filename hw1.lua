@@ -106,7 +106,7 @@ end
 
 
 --- ### Train the network on training set, evaluate on separate set
-epochs = 50
+epochs = 120
 
 trainLoss = torch.Tensor(epochs)
 testLoss = torch.Tensor(epochs)
