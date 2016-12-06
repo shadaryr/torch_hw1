@@ -7,12 +7,11 @@ local trainLabels = mnist.traindataset().label:add(1);
 testData = mnist.testdataset().data:float();
 testLabels = mnist.testdataset().label:add(1);
 
---normalizing our data
+--normalizing our data - test & train
 local mean = trainData:mean()
 local std = trainData:std()
 trainData:add(-mean):div(std); 
 testData:add(-mean):div(std);
-
 
 ----- ### Shuffling data
 function shuffle(data, labels) --shuffle data function
@@ -26,15 +25,17 @@ require 'cunn'
 
 local inputSize = 28*28
 local outputSize = 10 --number of classes, since there are 10 digits
-local layerSize = {inputSize, 64, 128 , 32}
+local layerSize = {inputSize, 32, 32 ,32, 32, 32}
 
 -- Creating the model; adding a linear transformation and a transfer function between the layers 
 model = nn.Sequential()
 model:add(nn.View(28 * 28)) --reshapes the image into a vector without copy
+
 for i=1, #layerSize-1 do
     model:add(nn.Linear(layerSize[i], layerSize[i+1]))
-    model:add(nn.ReLU())
+	model:add(nn.ReLU())
 end
+
 
 -- Adding the final layer to the model
 model:add(nn.Linear(layerSize[#layerSize], outputSize))
@@ -49,7 +50,8 @@ print('Number of parameters:', w:nElement()) --over-specified model
 
 
 ---- ### Classification criterion
-criterion = nn.ClassNLLCriterion():cuda()
+--criterion = nn.ClassNLLCriterion():cuda()
+criterion = nn.CrossEntropyCriterion():cuda()
 
 ---	 ### predefined constants
 require 'optim'
@@ -152,12 +154,23 @@ print('Test error: ' .. testError[epochs], 'Test Loss: ' .. testLoss[epochs])
 model:insert(nn.Dropout(0.9):cuda(), 8) --at each training stage, individual nodes are either dropped out with probablity of 0.1 or kept with propability 0.9
 
 -- ********************* Plots *********************
---[[
+
+-- plotting Loss as a function of epochs. Depicts both train and test
 require 'gnuplot'
 local range = torch.range(1, epochs)
-gnuplot.pngfigure('test.png')
+gnuplot.pngfigure('loss.png')
 gnuplot.plot({'trainLoss',trainLoss},{'testLoss',testLoss})
 gnuplot.xlabel('epochs')
 gnuplot.ylabel('Loss')
 gnuplot.plotflush()
-]]
+
+-- plotting Error as a function of epochs. Depicts both train and test
+local range = torch.range(1, epochs)
+gnuplot.pngfigure('error.png')
+gnuplot.plot({'trainError',trainError},{'testError',testError})
+gnuplot.xlabel('epochs')
+gnuplot.ylabel('Error')
+gnuplot.plotflush()
+
+
+torch.save('nn_hw1.t7', model)
