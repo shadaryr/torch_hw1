@@ -36,11 +36,11 @@ model:add(nn.View(28 * 28)) --reshapes the image into a vector without copy
 	model:add(nn.ReLU())
 end ]]--
 
-model:add(nn.Linear(inputSize, 64)
+model:add(nn.Linear(inputSize, 64))
 model:add(nn.ReLU())
-model:add(nn.Linear(64, 128)
+model:add(nn.Linear(64, 128))
 model:add(nn.Tanh())
-model:add(nn.Linear(128, 32)
+model:add(nn.Linear(128, 32))
 model:add(nn.ReLU())
 
 
