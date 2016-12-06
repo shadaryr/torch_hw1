@@ -25,7 +25,7 @@ require 'cunn'
 
 local inputSize = 28*28
 local outputSize = 10 --number of classes, since there are 10 digits
-local layerSize = {inputSize, 16, 16, 16, 16, 64, 32}
+local layerSize = {inputSize, 64, 128, 32}
 
 -- Creating the model; adding a linear transformation and a transfer function between the layers 
 model = nn.Sequential()
@@ -106,7 +106,7 @@ end
 
 
 --- ### Train the network on training set, evaluate on separate set
-epochs = 40
+epochs = 80
 
 trainLoss = torch.Tensor(epochs)
 testLoss = torch.Tensor(epochs)
