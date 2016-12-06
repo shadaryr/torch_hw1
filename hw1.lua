@@ -39,7 +39,7 @@ end ]]--
 model:add(nn.Linear(inputSize, 64))
 model:add(nn.ReLU())
 model:add(nn.Linear(64, 128))
-model:add(nn.Tanh())
+model:add(nn.ReLU())
 model:add(nn.Linear(128, 32))
 model:add(nn.ReLU())
 
@@ -64,7 +64,7 @@ require 'optim'
 batchSize = 128
 
 optimState = {
-    learningRate = 0.1
+    learningRate = 0.07
 }
 
 
